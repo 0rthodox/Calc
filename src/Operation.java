@@ -19,6 +19,5 @@ public enum Operation {
 
     public static Character getSymbol(Operation operation) {
         return characterMap.get(operation);
-
     }
 }

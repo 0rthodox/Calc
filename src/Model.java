@@ -1,4 +1,4 @@
-public class Calculator {
+public class Model {
     Double leftOperand;
     Double rightOperand;
     Operation operation;

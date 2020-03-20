@@ -1,6 +1,5 @@
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -17,22 +16,24 @@ public class View extends VBox {
 
     TextField field = new TextField();
     GridPane buttons = new GridPane();
-
-    
-    
-
-    
-    
-    
-
-    Calculator calculator = new Calculator();
+    Model calculator = new Model();
 
     View() {
         field.setPrefWidth(WIDTH);
+        field.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 22));
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            String testValue = newValue;
+            if(newValue.startsWith("-")) {
+                testValue = newValue.substring(1);
+            }
+            if (!testValue.matches("\\d*([\\.]\\d*)?")) {
+                field.setText(oldValue);
+            }
+        });
         heightProperty().addListener(((observable, oldValue, newValue) -> {
             Double doubleValue = (Double)newValue;
-            if (doubleValue > 400 && doubleValue % 12 == 0) {
-                field.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, doubleValue / 12));
+            if (doubleValue > 220 && doubleValue % 12 == 0 && doubleValue < 2 * widthProperty().doubleValue()) {
+                field.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, doubleValue / 10));
                 for(Node node : buttons.getChildren()) {
                     ((Button)node).setPadding(Insets.EMPTY);
                     ((Button)node).setFont(new Font(doubleValue / 12));
@@ -92,7 +93,13 @@ public class View extends VBox {
         Button equalsButton = new Button("=");
         equalsButton.setOnAction(event -> {
             calculator.setOperand(Double.parseDouble(field.getText()));
-            field.setText(calculator.calculate().toString());
+            System.out.println("Equals pressed");
+            System.out.println("Left operand = " + calculator.leftOperand);
+            System.out.println("Right operand = " + calculator.rightOperand);
+            System.out.println("Operation = " + calculator.operation);
+            Integer result = (Integer)calculator.calculate();
+            System.out.println("Result = " + result);
+            field.setText(result.toString());
         });
         buttons.add(equalsButton, 2, 0);
 
@@ -108,7 +115,7 @@ public class View extends VBox {
 
     }
 
-    Button createNumberButton(Integer number) {
+    private Button createNumberButton(Integer number) {
         Button numberButton = new Button(number.toString());
         numberButton.setOnAction(event -> {
             field.appendText(number.toString());
@@ -116,14 +123,18 @@ public class View extends VBox {
         return numberButton;
     }
 
-    Button createOperationButton(Operation operation) {
+    private Button createOperationButton(Operation operation) {
         Button operationButton = new Button(Operation.getSymbol(operation).toString());
         operationButton.setOnAction(event -> {
+            System.out.println(operation + "button pressed");
+            System.out.println(operation + "button pressed");
             if (!field.getText().isEmpty()) {
                 calculator.setOperand(Double.parseDouble(field.getText()));
                 field.clear();
                 calculator.setOperation(operation);
             }
+            System.out.println("left operand = " + calculator.leftOperand);
+            System.out.println("rigt operand = " + calculator.rightOperand);
         });
         return operationButton;
     }
