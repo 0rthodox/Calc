@@ -11,15 +11,16 @@ import javafx.scene.text.FontWeight;
 
 public class View extends VBox {
 
-    private static final double BUTTON_WIDTH = 40;
-    private final int WIDTH = 300;
+    private static final double INIT_BUTTON_WIDTH = 40;
 
     TextField field = new TextField();
     GridPane buttons = new GridPane();
     Model calculator = new Model();
 
     View() {
-        field.setPrefWidth(WIDTH);
+        final int initialWidth = 300;
+        final int minimumButtonWidth = 40;
+        field.setPrefWidth(initialWidth);
         field.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, 22));
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             String testValue = newValue;
@@ -93,13 +94,7 @@ public class View extends VBox {
         Button equalsButton = new Button("=");
         equalsButton.setOnAction(event -> {
             calculator.setOperand(Double.parseDouble(field.getText()));
-            System.out.println("Equals pressed");
-            System.out.println("Left operand = " + calculator.leftOperand);
-            System.out.println("Right operand = " + calculator.rightOperand);
-            System.out.println("Operation = " + calculator.operation);
-            Integer result = (Integer)calculator.calculate();
-            System.out.println("Result = " + result);
-            field.setText(result.toString());
+            field.setText(calculator.calculate().toString());
         });
         buttons.add(equalsButton, 2, 0);
 
@@ -108,9 +103,9 @@ public class View extends VBox {
             Button button = (Button)node;
             button.prefWidthProperty().bind(widthProperty());
             button.prefHeightProperty().bind(heightProperty());
-            button.setMinWidth(BUTTON_WIDTH);
-            button.setMinHeight(BUTTON_WIDTH);
-            button.setFont(new Font(BUTTON_WIDTH * 0.5));
+            button.setMinWidth(minimumButtonWidth);
+            button.setMinHeight(minimumButtonWidth);
+            button.setFont(new Font(minimumButtonWidth * 0.5));
         }
 
     }
@@ -126,15 +121,11 @@ public class View extends VBox {
     private Button createOperationButton(Operation operation) {
         Button operationButton = new Button(Operation.getSymbol(operation).toString());
         operationButton.setOnAction(event -> {
-            System.out.println(operation + "button pressed");
-            System.out.println(operation + "button pressed");
             if (!field.getText().isEmpty()) {
                 calculator.setOperand(Double.parseDouble(field.getText()));
                 field.clear();
                 calculator.setOperation(operation);
             }
-            System.out.println("left operand = " + calculator.leftOperand);
-            System.out.println("rigt operand = " + calculator.rightOperand);
         });
         return operationButton;
     }
