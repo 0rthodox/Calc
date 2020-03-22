@@ -3,11 +3,17 @@ public class Model {
     Double rightOperand;
     Operation operation;
 
-    public void setOperand(Double operand) {
-        if (leftOperand == null) {
-            leftOperand = operand;
+    public void setOperand(String operand) {
+        Double parsedOperand;
+        if (operand == null || operand.isEmpty()) {
+            parsedOperand = 0.;
         } else {
-            rightOperand = operand;
+            parsedOperand = Double.parseDouble(operand);
+        }
+        if (leftOperand == null) {
+            leftOperand = parsedOperand;
+        } else {
+            rightOperand = parsedOperand;
         }
     }
 

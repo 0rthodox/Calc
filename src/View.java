@@ -1,5 +1,3 @@
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -11,11 +9,9 @@ import javafx.scene.text.FontWeight;
 
 public class View extends VBox {
 
-    private static final double INIT_BUTTON_WIDTH = 40;
-
-    TextField field = new TextField();
-    GridPane buttons = new GridPane();
-    Model calculator = new Model();
+    private TextField field = new TextField();
+    private GridPane buttonsLayout = new GridPane();
+    private Model calculator = new Model();
 
     View() {
         final int initialWidth = 300;
@@ -35,7 +31,7 @@ public class View extends VBox {
             Double doubleValue = (Double)newValue;
             if (doubleValue > 220 && doubleValue % 12 == 0 && doubleValue < 2 * widthProperty().doubleValue()) {
                 field.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, doubleValue / 10));
-                for(Node node : buttons.getChildren()) {
+                for(Node node : buttonsLayout.getChildren()) {
                     ((Button)node).setPadding(Insets.EMPTY);
                     ((Button)node).setFont(new Font(doubleValue / 12));
                 }
@@ -43,7 +39,7 @@ public class View extends VBox {
         }));
 
         for(Integer i = 0; i <= 9; ++i) {
-            buttons.add(createNumberButton(i), i % 3,i / 3 + 1);
+            buttonsLayout.add(createNumberButton(i), i % 3,i / 3 + 1);
         }
 
         Button plusMinusButton = new Button("+/-");
@@ -56,50 +52,50 @@ public class View extends VBox {
                 }
             }
         });
-        buttons.add(plusMinusButton, 1, 4);
+        buttonsLayout.add(plusMinusButton, 1, 4);
 
         Button commaButton = new Button(",");
         commaButton.setOnAction(event -> {
             field.appendText(".");
         });
-        buttons.add(commaButton, 2, 4);
+        buttonsLayout.add(commaButton, 2, 4);
 
         Button degreeButton = new Button("^");
         degreeButton.setOnAction(event -> {
-            calculator.setOperand(Double.parseDouble(field.getText()));
+            calculator.setOperand(field.getText());
             field.clear();
             calculator.setOperation(Operation.EXTENSION);
         });
-        buttons.add(degreeButton, 0, 0);
+        buttonsLayout.add(degreeButton, 0, 0);
 
         Button clearButton = new Button("Clc");
         clearButton.setOnAction(event -> {
             calculator.resetLast();
             field.clear();
         });
-        buttons.add(clearButton, 0, 0);
+        buttonsLayout.add(clearButton, 0, 0);
 
         Button backspaceButton = new Button("<");
         backspaceButton.setOnAction(event -> {
             String text = field.getText();
             field.setText(text.substring(0, text.length() - 1));
         });
-        buttons.add(backspaceButton, 1, 0);
+        buttonsLayout.add(backspaceButton, 1, 0);
 
         int i = 0;
         for(Operation operation : Operation.values()) {
-            buttons.add(createOperationButton(operation), 3, i++);
+            buttonsLayout.add(createOperationButton(operation), 3, i++);
         }
 
         Button equalsButton = new Button("=");
         equalsButton.setOnAction(event -> {
-            calculator.setOperand(Double.parseDouble(field.getText()));
+            calculator.setOperand(field.getText());
             field.setText(calculator.calculate().toString());
         });
-        buttons.add(equalsButton, 2, 0);
+        buttonsLayout.add(equalsButton, 2, 0);
 
-        this.getChildren().addAll(field, buttons);
-        for(Node node : buttons.getChildren()) {
+        this.getChildren().addAll(field, buttonsLayout);
+        for(Node node : buttonsLayout.getChildren()) {
             Button button = (Button)node;
             button.prefWidthProperty().bind(widthProperty());
             button.prefHeightProperty().bind(heightProperty());
@@ -119,10 +115,10 @@ public class View extends VBox {
     }
 
     private Button createOperationButton(Operation operation) {
-        Button operationButton = new Button(Operation.getSymbol(operation).toString());
+        Button operationButton = new Button(operation.getOperation().toString());
         operationButton.setOnAction(event -> {
             if (!field.getText().isEmpty()) {
-                calculator.setOperand(Double.parseDouble(field.getText()));
+                calculator.setOperand(field.getText());
                 field.clear();
                 calculator.setOperation(operation);
             }
