@@ -1,4 +1,9 @@
-public class Model {
+package main.java.calc;
+
+import main.java.operation.Operation;
+import main.java.operation.OperationException;
+
+public class CalculatorModel {
     Double leftOperand;
     Double rightOperand;
     Operation operation;
@@ -24,7 +29,7 @@ public class Model {
     public Number calculate() {
         Double result;
         if (leftOperand == null || rightOperand == null) {
-            throw new IllegalStateException("An operand is null");
+            throw new OperationException("An operand is null", operation);
         }
         switch (operation) {
             case ADDITION: result = leftOperand + rightOperand; break;
@@ -33,7 +38,7 @@ public class Model {
             case MULTIPLICATION: result = leftOperand * rightOperand; break;
             case EXTENSION: result = Math.pow(leftOperand, rightOperand); break;
             default:
-                throw new IllegalStateException("Unexpected value: " + operation);
+                throw new OperationException("Wrong operation", operation);
         }
         leftOperand = null;
         rightOperand = null;

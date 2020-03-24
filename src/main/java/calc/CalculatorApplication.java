@@ -1,14 +1,16 @@
+package main.java.calc;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import utils.ImageManager;
 
-public class App extends Application {
+public class CalculatorApplication extends Application {
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setScene(new Scene(new View()));
+        primaryStage.setScene(new Scene(new CalculatorView()));
         primaryStage.setTitle("Calc");
-        primaryStage.getIcons().add(ImageManager.readImage("resources/x.png"));
+        primaryStage.getIcons().add(ImageManager.readImage("src/main/resources/x.png"));
         primaryStage.show();
     }
 }

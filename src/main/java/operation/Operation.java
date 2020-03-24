@@ -1,3 +1,5 @@
+package main.java.operation;
+
 public enum Operation {
     EXTENSION('^'),
     DIVISION('/'),
