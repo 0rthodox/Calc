@@ -1,12 +1,10 @@
-package main.java.calc;
+package calculator;
 
-import main.java.operation.Operation;
-import main.java.operation.OperationException;
-
-public class CalculatorModel {
+public class CalculatorViewModel {
     Double leftOperand;
     Double rightOperand;
-    Operation operation;
+
+calculator.Operation operation;
 
     public void setOperand(String operand) {
         Double parsedOperand;
@@ -49,7 +47,7 @@ public class CalculatorModel {
         return result;
     }
 
-    public void resetLast() {
+    public void resetLastSavedOperand() {
         if (rightOperand != null) {
             rightOperand = null;
         } else {

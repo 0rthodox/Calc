@@ -1,4 +1,4 @@
-package main.java.operation;
+package calculator;
 
 public enum Operation {
     EXTENSION('^'),

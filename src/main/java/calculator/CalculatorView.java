@@ -1,4 +1,4 @@
-package main.java.calc;
+package calculator;
 
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -8,13 +8,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import main.java.operation.Operation;
 
 public class CalculatorView extends VBox {
-
-    private TextField input = new TextField();
-    private GridPane buttonsLayout = new GridPane();
-    private CalculatorModel calculator = new CalculatorModel();
     private static final int INITIAL_WIDTH = 300;
     private static final int MINIMUM_BUTTON_WIDTH = 40;
     private static final int INITIAL_FONT = 22;
@@ -22,12 +17,16 @@ public class CalculatorView extends VBox {
     private static final int INPUT_FONT_DELTA = 10;
     private static final int MINIMUM_LAYOUT_WIDTH = 220;
 
+    private TextField input = new TextField();
+    private GridPane buttonsLayout = new GridPane();
+    private CalculatorViewModel calculatorViewModel = new CalculatorViewModel();
+
     CalculatorView() {
-        setFrontEnd();
-        setButtons();
+        initView();
+        initButtons();
     }
 
-    private void setFrontEnd() {
+    private void initView() {
         input.setPrefWidth(INITIAL_WIDTH);
         input.setFont(Font.font("Comic Sans MS", FontWeight.BOLD, INITIAL_FONT));
         input.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -39,6 +38,8 @@ public class CalculatorView extends VBox {
                 input.setText(oldValue);
             }
         });
+
+        // Resizing window
         heightProperty().addListener(((observable, oldValue, newValue) -> {
             Double doubleValue = (Double)newValue;
             if (doubleValue > MINIMUM_LAYOUT_WIDTH && doubleValue % FONT_DELTA == 0 && doubleValue < 2 * widthProperty().doubleValue()) {
@@ -65,17 +66,17 @@ public class CalculatorView extends VBox {
         Button operationButton = new Button(operation.getOperation().toString());
         operationButton.setOnAction(event -> {
             if (!input.getText().isEmpty()) {
-                calculator.setOperand(input.getText());
+                calculatorViewModel.setOperand(input.getText());
                 input.clear();
-                calculator.setOperation(operation);
+                calculatorViewModel.setOperation(operation);
             }
         });
         return operationButton;
     }
 
-    private void signButtonLogic() {
+    private void signPressed() {
         if (!input.getText().isEmpty()) {
-            if (input.getText(0, 1).equals("-")) {
+            if (input.getText().contains("-")) {
                 input.setText(input.getText().substring(1));
             } else {
                 input.setText("-" + input.getText());
@@ -83,36 +84,38 @@ public class CalculatorView extends VBox {
         }
     }
 
-    private void backspaceButtonLogic() {
+    private void backspacePressed() {
         String text = input.getText();
         input.setText(text.substring(0, text.length() - 1));
     }
 
-    private void clearButtonLogic() {
-        calculator.resetLast();
+    private void clearPressed() {
+        calculatorViewModel.resetLastSavedOperand();
         input.clear();
     }
 
-    private void degreeButtonLogic() {
-        calculator.setOperand(input.getText());
-        input.clear();
-        calculator.setOperation(Operation.EXTENSION);
+    private void degreePressed() {
+        if (!input.getText().isEmpty()) {
+            calculatorViewModel.setOperand(input.getText());
+            input.clear();
+            calculatorViewModel.setOperation(Operation.EXTENSION);
+        }
     }
 
-    private void equalsButtonLogic() {
-        calculator.setOperand(input.getText());
-        input.setText(calculator.calculate().toString());
+    private void equalsPressed() {
+        calculatorViewModel.setOperand(input.getText());
+        input.setText(calculatorViewModel.calculate().toString());
     }
 
     //Setting buttons
 
-    private void setButtons() {
+    private void initButtons() {
         for(Integer i = 0; i <= 9; ++i) {
             buttonsLayout.add(createNumberButton(i), i % 3,i / 3 + 1);
         }
 
         Button signButton = new Button("+/-");
-        signButton.setOnAction(event -> signButtonLogic());
+        signButton.setOnAction(event -> signPressed());
         buttonsLayout.add(signButton, 1, 4);
 
         Button commaButton = new Button(",");
@@ -120,15 +123,15 @@ public class CalculatorView extends VBox {
         buttonsLayout.add(commaButton, 2, 4);
 
         Button degreeButton = new Button("^");
-        degreeButton.setOnAction(event -> degreeButtonLogic());
+        degreeButton.setOnAction(event -> degreePressed());
         buttonsLayout.add(degreeButton, 0, 0);
 
         Button clearButton = new Button("Clc");
-        clearButton.setOnAction(event -> clearButtonLogic());
+        clearButton.setOnAction(event -> clearPressed());
         buttonsLayout.add(clearButton, 0, 0);
 
         Button backspaceButton = new Button("<");
-        backspaceButton.setOnAction(event -> backspaceButtonLogic());
+        backspaceButton.setOnAction(event -> backspacePressed());
         buttonsLayout.add(backspaceButton, 1, 0);
 
         int i = 0;
@@ -137,7 +140,7 @@ public class CalculatorView extends VBox {
         }
 
         Button equalsButton = new Button("=");
-        equalsButton.setOnAction(event -> equalsButtonLogic());
+        equalsButton.setOnAction(event -> equalsPressed());
         buttonsLayout.add(equalsButton, 2, 0);
 
         this.getChildren().addAll(input, buttonsLayout);

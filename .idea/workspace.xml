@@ -3,12 +3,14 @@
   <component name="ChangeListManager">
     <list default="true" id="48eafc28-2d99-4cc5-9bd0-87cff7a7c6de" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/x.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/App.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Operation.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/View.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/ImageManager.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Calc.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Calc.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Calc/main/resources/x.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/calc/CalculatorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/calculator/CalculatorApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/calc/CalculatorModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/calculator/CalculatorViewModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/calc/CalculatorView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/calculator/CalculatorView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/operation/Operation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/calculator/Operation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/operation/OperationException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/calculator/OperationException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/utils/ImageManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/utils/ImageManager.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +65,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Application.CalculatorApplication (1)">
+  <component name="RunManager" selected="Application.CalculatorApplication">
     <configuration name="CalculatorApplication (1)" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="main.java.calc.CalculatorApplication" />
       <module name="Calc" />
@@ -78,7 +80,7 @@
       </method>
     </configuration>
     <configuration name="CalculatorApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="calc.CalculatorApplication" />
+      <option name="MAIN_CLASS_NAME" value="calculator.CalculatorApplication" />
       <module name="Calc" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -86,8 +88,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.CalculatorApplication (1)" />
         <item itemvalue="Application.CalculatorApplication" />
+        <item itemvalue="Application.CalculatorApplication (1)" />
       </list>
     </recent_temporary>
   </component>
@@ -108,7 +110,13 @@
       <workItem from="1584868165518" duration="1417000" />
       <workItem from="1584871654560" duration="1217000" />
       <workItem from="1585084362946" duration="1978000" />
-      <workItem from="1585086386320" duration="348000" />
+      <workItem from="1585086386320" duration="976000" />
+      <workItem from="1585140894218" duration="763000" />
+      <workItem from="1585164613603" duration="1881000" />
+      <workItem from="1585166504549" duration="62000" />
+      <workItem from="1585169501904" duration="131000" />
+      <workItem from="1585169747932" duration="37000" />
+      <workItem from="1585171032136" duration="63000" />
     </task>
     <servers />
   </component>

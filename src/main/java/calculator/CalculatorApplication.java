@@ -1,4 +1,4 @@
-package main.java.calc;
+package calculator;
 
 import javafx.application.Application;
 import javafx.scene.Scene;

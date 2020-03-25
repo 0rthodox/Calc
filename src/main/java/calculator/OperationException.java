@@ -1,4 +1,4 @@
-package main.java.operation;
+package calculator;
 
 public class OperationException extends RuntimeException {
     private Operation currentOperation;
